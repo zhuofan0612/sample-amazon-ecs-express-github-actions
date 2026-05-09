@@ -72,4 +72,26 @@ resource "aws_iam_role_policy_attachment" "github_actions" {
   policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
 }
 
+resource "aws_ecs_cluster" "main" {
+  name = var.ecs_cluster_name
+}
+
+resource "aws_iam_role" "ecs_infrastructure" {
+  name = var.ecs_infrastructure_role_name
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [{
+      Effect    = "Allow"
+      Principal = { Service = "ecs.amazonaws.com" }
+      Action    = "sts:AssumeRole"
+    }]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "ecs_infrastructure" {
+  role       = aws_iam_role.ecs_infrastructure.name
+  policy_arn = "arn:aws:iam::aws:policy/AdministratorAccess"
+}
+
 data "aws_caller_identity" "current" {}

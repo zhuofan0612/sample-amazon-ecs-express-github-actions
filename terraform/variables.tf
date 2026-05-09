@@ -13,3 +13,11 @@ variable "github_username" {
 variable "github_repo" {
   default = "sample-amazon-ecs-express-github-actions"
 }
+
+variable "ecs_infrastructure_role_name" {
+  default = "ecsInfrastructureRoleForExpressServices"
+}
+
+variable "ecs_cluster_name" {
+  default = "my-app-cluster"
+}
